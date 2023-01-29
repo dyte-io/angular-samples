@@ -18,8 +18,8 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
-    "@dytesdk/angular-ui-kit": "^1.40.0",
-    "@dytesdk/web-core": "^0.45.4",
+    "@dytesdk/angular-ui-kit": "^1.41.3",
+    "@dytesdk/web-core": "^1.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
