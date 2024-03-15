@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@dytesdk/angular-ui-kit": "^1.66.0",
+    "@dytesdk/ui-kit-addons": "^1.1.5",
     "@dytesdk/web-core": "^1.30.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

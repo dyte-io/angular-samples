@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DyteMeeting } from '@dytesdk/angular-ui-kit';
+import { DyteMeeting, registerAddons } from '@dytesdk/angular-ui-kit';
 import DyteClient from '@dytesdk/web-core';
+import VideoBG from '@dytesdk/ui-kit-addons/video-background';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,13 @@ export class AppComponent {
       authToken,
     });
 
+    const virtualBgAddon = new VideoBG({
+      images: ['https://assets.dyte.io/backgrounds/bg_0.jpg'],
+      modes: ['blur', 'virtual']
+    })
+    const newConfig = registerAddons([virtualBgAddon], meeting);
+
     this.$meetingEl.meeting = meeting;
+    this.$meetingEl.config = newConfig;
   }
 }
