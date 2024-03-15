@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { DyteMeeting, registerAddons } from '@dytesdk/angular-ui-kit';
+import { DyteMeeting, provideDyteDesignSystem, registerAddons } from '@dytesdk/angular-ui-kit';
 import DyteClient from '@dytesdk/web-core';
 import VideoBG from '@dytesdk/ui-kit-addons/video-background';
 
@@ -34,6 +34,9 @@ export class AppComponent {
       modes: ['blur', 'virtual']
     })
     const newConfig = registerAddons([virtualBgAddon], meeting);
+    provideDyteDesignSystem(document.body, {
+      theme: 'light'
+    });
 
     this.$meetingEl.meeting = meeting;
     this.$meetingEl.config = newConfig;
