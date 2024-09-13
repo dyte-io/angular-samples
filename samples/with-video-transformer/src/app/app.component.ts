@@ -18,11 +18,7 @@ export class AppComponent {
 
     const authToken = searchParams.get('authToken');
 
-    // pass an empty string when using v2 meetings
-    // for v1 meetings, you would need to pass the correct roomName here
-    const roomName = searchParams.get('roomName') || '';
-
-    console.log({ authToken, roomName });
+    console.log({ authToken });
 
     if (!authToken) {
       alert(
@@ -32,14 +28,22 @@ export class AppComponent {
     }
 
     const meeting = await DyteClient.init({
-      roomName,
       authToken,
     });
 
     this.$meetingEl.meeting = meeting;
 
+    /**
+     * To customise DyteVideoBackgroundTransformer configs, please refer to https://www.npmjs.com/package/@dytesdk/video-background-transformer?activeTab=readme.
+     * 
+    */
     const videoBackgroundTransformer =
-      await DyteVideoBackgroundTransformer.init();
+      await DyteVideoBackgroundTransformer.init({
+        meeting,
+        segmentationConfig: {
+          pipeline: 'canvas2dCpu', // 'webgl2' | 'canvas2dCpu'
+        },
+      });
 
     // The video-background-transformer provides two functionalities
     // 1. Add background blur
