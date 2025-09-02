@@ -1,5 +1,8 @@
-node_modules
+node_modules/
+dist/
 
 .DS_Store
-pnpm-lock.yaml
 yarn.lock
+pnpm-lock.yaml
+bun.lockb
+package-lock.json
