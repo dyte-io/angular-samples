@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "dev": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,9 +19,9 @@
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
-    "@dytesdk/angular-ui-kit": "^2.0.3",
-    "@dytesdk/web-core": "^2.0.7",
-    "@dytesdk/video-background-transformer": "^2.0.3",
+    "@cloudflare/realtimekit-angular-ui": "1.0.5",
+    "@cloudflare/realtimekit": "1.1.7",
+    "@cloudflare/realtimekit-ui-addons": "0.0.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

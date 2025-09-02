@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DyteMeeting } from '@dytesdk/angular-ui-kit';
-import DyteVideoBackgroundTransformer from '@dytesdk/video-background-transformer';
-import DyteClient from '@dytesdk/web-core';
+import { RtkMeeting, registerAddons } from '@cloudflare/realtimekit-angular-ui';
+import RealtimeKitClient from '@cloudflare/realtimekit';
+import VideoBackground from '@cloudflare/realtimekit-ui-addons/video-background';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import DyteClient from '@dytesdk/web-core';
 export class AppComponent {
   title = 'with-video-transformer';
 
-  @ViewChild('meeting') $meetingEl!: DyteMeeting;
+  @ViewChild('meeting') $meetingEl!: RtkMeeting;
 
   async ngAfterViewInit() {
     const searchParams = new URL(window.location.href).searchParams;
@@ -27,49 +27,26 @@ export class AppComponent {
       return;
     }
 
-    const meeting = await DyteClient.init({
+    const meeting = await RealtimeKitClient.init({
       authToken,
     });
 
     this.$meetingEl.meeting = meeting;
 
-    /**
-     * To customise DyteVideoBackgroundTransformer configs, please refer to https://www.npmjs.com/package/@dytesdk/video-background-transformer?activeTab=readme.
-     * 
-    */
-    const videoBackgroundTransformer =
-      await DyteVideoBackgroundTransformer.init({
-        meeting,
-        segmentationConfig: {
-          pipeline: 'canvas2dCpu', // 'webgl2' | 'canvas2dCpu'
-        },
-      });
+    const videoBackground = await VideoBackground.init({
+      modes: ["blur", "virtual", "random"],
+      blurStrength: 30, // 0 - 100 for opacity
+      meeting: meeting!,
+      images: [
+          "https://images.unsplash.com/photo-1487088678257-3a541e6e3922?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3",
+          "https://images.unsplash.com/photo-1496715976403-7e36dc43f17b?q=80&w=2848&auto=format&fit=crop&ixlib=rb-4.0.3",
+          "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=2938&auto=format&fit=crop&ixlib=rb-4.0.3"
+      ],
+      randomCount: 10,
+    });
 
-    // The video-background-transformer provides two functionalities
-    // 1. Add background blur
-    // 2. Add a background image
+    const newConfig = registerAddons([videoBackground], meeting);
 
-    // 1. To add background blur, with strength of 10
-    meeting.self.addVideoMiddleware(
-      await videoBackgroundTransformer.createBackgroundBlurVideoMiddleware(10)
-    );
-
-    // 2. To add a background image
-    // meeting.self.addVideoMiddleware(
-    //   await videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(
-    //     'https://assets.dyte.io/backgrounds/bg-dyte-office.jpg'
-    //   )
-    // );
-
-    // We have the following set of images for your immediate use:
-    // https://assets.dyte.io/backgrounds/bg-dyte-office.jpg
-    // https://assets.dyte.io/backgrounds/bg_0.jpg
-    // https://assets.dyte.io/backgrounds/bg_1.jpg
-    // https://assets.dyte.io/backgrounds/bg_2.jpg
-    // https://assets.dyte.io/backgrounds/bg_3.jpg
-    // https://assets.dyte.io/backgrounds/bg_4.jpg
-    // https://assets.dyte.io/backgrounds/bg_5.jpg
-    // https://assets.dyte.io/backgrounds/bg_6.jpg
-    // https://assets.dyte.io/backgrounds/bg_7.jpg
+    this.$meetingEl.config = newConfig;
   }
 }
