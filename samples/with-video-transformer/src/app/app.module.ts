@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 
-import { DyteComponentsModule } from '@dytesdk/angular-ui-kit';
+import { RealtimeKitComponentsModule } from '@cloudflare/realtimekit-angular-ui';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, DyteComponentsModule],
+  imports: [BrowserModule, RealtimeKitComponentsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

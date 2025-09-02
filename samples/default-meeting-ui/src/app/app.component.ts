@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { DyteMeeting } from '@dytesdk/angular-ui-kit';
-import DyteClient from '@dytesdk/web-core';
+import { RtkMeeting } from '@cloudflare/realtimekit-angular-ui';
+import RealtimeKitClient from '@cloudflare/realtimekit';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import DyteClient from '@dytesdk/web-core';
 export class AppComponent {
   title = 'default-meeting-ui';
 
-  @ViewChild('meeting') $meetingEl!: DyteMeeting;
+  @ViewChild('meeting') $meetingEl!: RtkMeeting;
 
   async ngAfterViewInit() {
     const searchParams = new URL(window.location.href).searchParams;
@@ -24,7 +24,7 @@ export class AppComponent {
       return;
     }
 
-    const meeting = await DyteClient.init({
+    const meeting = await RealtimeKitClient.init({
       authToken,
     });
 
